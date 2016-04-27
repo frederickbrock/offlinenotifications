@@ -10,12 +10,10 @@ module.exports = (function() {
 
     var repository = require("./repository/UserProfileRepository");
     var profileRepository = new repository.Repository();
-    
+
 
     var app = express();
-    //this is my dataStore
-    var profileRepository = new ProfileRepository();
-
+    
     var pubnub = require("pubnub").init({
         subscribe_key: "sub-c-856ccee2-ca2d-11e5-8a35-0619f8945a4f",
         publish_key: "pub-c-ab9467c4-ec29-4a0b-81bc-c52bb310da8d",
