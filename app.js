@@ -101,7 +101,7 @@ module.exports = (function() {
 
 
         if ((event != null) || (event.hasOwnerProperty("action") != true)) {
-            winston.info("could not process event: "  JSON.stringify(event));
+            winston.info("could not process event: "  + JSON.stringify(event));
             response.status(200).end();
             return;
         }
