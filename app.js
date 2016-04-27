@@ -89,16 +89,16 @@ module.exports = (function() {
 
     app.post("/chatterbox/api/v1/wh/presence", (request, response) => {
         winston.info('entering presence webhook');
+        var event = request.body;
 
         pubnub.publish({
             channel: "wh-raw",
-            message: request.body,
+            message: event,
             callback: function(result) {
                 winston.log("published status update");
             }
         });
 
-        var event = request.body;
 
         if ((event != null) || (!event.hasOwnerProperty("action"))) {
             winston.log("could not process event")
