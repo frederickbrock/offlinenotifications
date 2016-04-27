@@ -24,7 +24,7 @@ class ProfileRepository {
     }
 
     _findIdx(username) {
-        for (var idx = 0; idx < userprofiles.length; ++idx) {
+        for (var idx = 0; idx < this.userprofiles.length; ++idx) {
             if (this.userprofiles[idx].username === username) {
                 return idx;
             }
