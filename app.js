@@ -25,7 +25,7 @@ class ProfileRepository {
 
     _findIdx(username) {
         for (var idx = 0; idx < userprofiles.length; ++idx) {
-            if (userprofiles[idx].username === username) {
+            if (this.userprofiles[idx].username === username) {
                 return idx;
             }
         }
@@ -35,7 +35,7 @@ class ProfileRepository {
     find(username) {
         var idx = this._findIdx(username);
         if (idx > -1) {
-            return userprofiles[idx];
+            return this.userprofiles[idx];
         }
         return null;
     }
@@ -47,7 +47,7 @@ class ProfileRepository {
     put(profile) {
         var userIdx = this._findIdx(profile.username);
         if (userIdx == -1) {
-            userprofiles.append(profile);
+            this.userprofiles.append(profile);
         }
     }
 
