@@ -2,8 +2,6 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     winston = require('winston'),
-    fs = require('fs'),
-    path = require('path'),
     events = require("events");
 
 class Profile {
@@ -100,9 +98,13 @@ module.exports = (function() {
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
         if (event.channel === event.uuid) {
+            profile = profileRepository.find(event.uiid);
+            if (profile === null) {
+                winston.log("profile for uuid not found: " + event.uuid);
+                response.status(200).end();
+            }
 
             if (event.action === "join") {
-                profile = profileRepository.find(event.uiid)
                 if (profile === null) {
                     profile = new UserProfile(event.uuid);
                     profile.status = "loggingOn";
@@ -111,12 +113,6 @@ module.exports = (function() {
             }
 
             if (event.action === "state-change") {
-                profile = profileRepository.find(event.uiid)
-                if (profile === null) {
-                    winston.log("profile for uuid not found: " + event.uuid);
-                    response.status(200).end();
-                }
-
                 //if the user sends lat/latlong
                 if (event.data.hasOwnerProperty("latlong")) {
                     profile.latlong = data.latlong;
@@ -130,7 +126,15 @@ module.exports = (function() {
             if ((event.action === "leave") || (event.action === "timeout")) {
                 profileRepository.toggleStatus(event.uuid);
             }
+
+            pubnub.publish({channel: "online-status",
+                            message: profile,
+                            callback: function(result){
+                              winston.log("online-status published: " + result[0]);
+                            }});
       }
+
+      res.status(200).end();
 
     });
 

@@ -17,15 +17,16 @@
     <script language="javascript">
       (function(){
           var pubnub = PUNUB.init({
-              subscribe_key: ""
-              publish_key: ""
-              ssl: true
+              subscribe_key: "sub-c-856ccee2-ca2d-11e5-8a35-0619f8945a4f"
+              ,publish_key: "pub-c-ab9467c4-ec29-4a0b-81bc-c52bb310da8d"
+              ,ssl: true
           });
 
           eon.chart({
             channel: "online-status"
-            bindto: "online-status"
-            generate:{
+            ,bindto: "#online-status"
+            ,pubnub: pubnub
+            ,generate:{
               history: true
               limit: 5
             }
