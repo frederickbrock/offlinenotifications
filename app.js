@@ -33,7 +33,7 @@ class ProfileRepository {
     }
 
     find(username) {
-        var idx = this.findIdx(username);
+        var idx = this._findIdx(username);
         if (idx > -1) {
             return userprofiles[idx];
         }
