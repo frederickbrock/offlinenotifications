@@ -24,14 +24,14 @@
 
           eon.chart({
             channel: "online-status"
-            ,bindto: "#online-status"
-            ,pubnub: pubnub
+            pubnub: pubnub
             ,generate:{
-              history: true
-              limit: 5
+              bindto: "#online-status"
+              ,history: true
+              ,limit: 5
             }
           });
-
+          
 
       })()
     </script>

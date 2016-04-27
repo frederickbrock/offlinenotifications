@@ -77,6 +77,12 @@ module.exports = (function() {
         strict: false
     }));
 
+
+    app.get("/chatterbox/api/v1/presence", (request, response) => {
+        var userProfiles = profileRepository.findAll();
+        response.json(200,userProfiles).end();
+    })
+
     app.post("/chatterbox/api/v1/wh/presence", (request, response) => {
         winston.info('entering presence webhook');
 
@@ -127,11 +133,7 @@ module.exports = (function() {
                 profileRepository.toggleStatus(event.uuid);
             }
 
-            pubnub.publish({channel: "online-status",
-                            message: profile,
-                            callback: function(result){
-                              winston.log("online-status published: " + result[0]);
-                            }});
+
       }
 
       res.status(200).end();
