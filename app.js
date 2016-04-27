@@ -35,8 +35,12 @@ module.exports = (function() {
 
             app.post('/chatterbox/api/v1/wh/presence', function(request, response) {
                     logger.info('entering presence webhook');
+                    response.json(request.body);
 
             });
+
+
+
 
           app.listen(app.get('port'), function() {
               console.log('Node app is running on port', app.get('port'));
