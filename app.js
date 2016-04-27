@@ -2,8 +2,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     winston = require('winston'),
     fs = require('fs'),
-    path = require('path'),
-    passport = require('passport');
+    path = require('path');
 
 
 module.exports = (function() {
