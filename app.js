@@ -34,7 +34,7 @@ module.exports = (function() {
             });
 
             app.post('/chatterbox/api/v1/wh/presence', function(request, response) {
-                    logger.info('entering presence webhook');
+                    winston.info('entering presence webhook');
                     response.json(request.body);
 
             });
