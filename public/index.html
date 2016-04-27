@@ -1,0 +1,36 @@
+<html>
+<head>
+  <title>Push/Offline Monitor</title>
+  <link type="text/css" rel="stylesheet" href="//pubnub.github.io/eon/v/eon/0.0.10/eon.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="header-status">
+    </div>
+    <div id="logview">
+    </div>
+    </div>
+    <script type="text/javascript" src="bower_components/pubnub/web/pubnub.js"></script>
+    <script type="text/javascript" src="//pubnub.github.io/eon/v/eon/0.0.10/eon.js"></script>
+    <script language="javascript">
+      (function(){
+          var pubnub = PUNUB.init({
+              subscribe_key: ""
+              publish_key: ""
+              ssl: true
+          });
+
+          eon.chart({
+            channel: "online-status"
+            bindto: "online-status"
+            generate:{
+              history: true
+              limit: 5
+            }
+          });
+
+
+      })()
+    </script>
+</body>
+</html>
