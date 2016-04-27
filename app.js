@@ -84,8 +84,8 @@ module.exports = (function() {
 
     app.get("/chatterbox/api/v1/presence", (request, response) => {
         var userProfiles = profileRepository.findAll();
-        response.json(200,userProfiles).end();
-    })
+        response.status(200).json(userProfiles).end();
+    });
 
     app.post("/chatterbox/api/v1/wh/presence", (request, response) => {
         winston.info('entering presence webhook');
@@ -113,13 +113,13 @@ module.exports = (function() {
             if (profile === null) {
                 winston.log("profile for uuid not found: " + event.uuid);
                 response.status(200).end();
+                return;
             }
 
             if (event.action === "join") {
                 if (profile === null) {
                     profile = new UserProfile(event.uuid);
                     profile.status = "loggingOn";
-                    profileRepository.put(profile);
                 }
             }
 
@@ -135,8 +135,10 @@ module.exports = (function() {
             }
 
             if ((event.action === "leave") || (event.action === "timeout")) {
-                profileRepository.toggleStatus(event.uuid);
+                profile.status = "offline";
             }
+
+            profileRepository.put(profile);
 
 
       }
