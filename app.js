@@ -108,7 +108,7 @@ module.exports = (function() {
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
         if (event.channel === event.uuid) {
-            winston.log("found personal channel: " + event.channel);
+            winston.info("found personal channel: " + event.channel);
             profile = profileRepository.find(event.uiid);
             if (profile === null) {
                 winston.log("profile for uuid not found: " + event.uuid);
