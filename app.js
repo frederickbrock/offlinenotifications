@@ -40,6 +40,10 @@ class ProfileRepository {
         return null;
     }
 
+    findAll(){
+      return this.userprofiles;
+    }
+
     put(profile) {
         var userIdx = this._findIdx(profile.username);
         if (userIdx == -1) {
