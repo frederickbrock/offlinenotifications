@@ -99,7 +99,7 @@ module.exports = (function() {
             }
         });
 
-        if ((event != null) && (event.action)) {
+        if ((event != null) || (null == event.action)) {
             winston.info("could not process event: "  + JSON.stringify(event));
             response.status(200).end();
             return;
