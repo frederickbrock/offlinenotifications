@@ -23,15 +23,6 @@ class ProfileRepository {
         this.userprofiles = require("./user.json");
     }
 
-    _findIdx(username) {
-        for (var idx = 0; idx < this.userprofiles.length; ++idx) {
-            if (this.userprofiles[idx].username === username) {
-                return idx;
-            }
-        }
-        return -1;
-    }
-
     find(username) {
         var idx = this._findIdx(username);
         if (idx > -1) {
@@ -45,14 +36,17 @@ class ProfileRepository {
     }
 
     put(profile) {
-        var userIdx = this._findIdx(profile.username);
-        if (userIdx == -1) {
-            this.userprofiles.append(profile);
+        var profile = this.userprofiles[profile.username];
+        if(profile == null){
+          this.userprofiles[profile.username] = profile;
         }
     }
 
     toggleStatus(uuid) {
         profile = this.find(uuid);
+        if(profile == null){
+          winston.info("the profile being asked");
+        }
         profile.status = (profile.status === "online") ? "offline" : "online";
         this.put(profile);
     }
