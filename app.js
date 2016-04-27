@@ -95,12 +95,12 @@ module.exports = (function() {
             channel: "wh-raw",
             message: event,
             callback: function(result) {
-                winston.log("published status update");
+                winston.info("published status update");
             }
         });
 
 
-        if ((event != null) || (event.hasOwnerProperty("action") != true)) {
+        if ((event != null) && (event.hasOwnerProperty("action") != true)) {
             winston.info("could not process event: "  + JSON.stringify(event));
             response.status(200).end();
             return;
