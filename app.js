@@ -1,5 +1,4 @@
 var express = require('express'),
-    mongoose = require('mongoose'),
     bodyParser = require('body-parser'),
     winston = require('winston'),
     fs = require('fs'),
