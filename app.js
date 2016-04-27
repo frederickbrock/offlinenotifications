@@ -99,7 +99,6 @@ module.exports = (function() {
             }
         });
 
-
         if ((event != null) && (event.action)) {
             winston.info("could not process event: "  + JSON.stringify(event));
             response.status(200).end();
@@ -107,7 +106,7 @@ module.exports = (function() {
         }
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
-        if (event.channel === event.uuid) {
+      if (event.channel === event.uuid) {
             winston.info("found personal channel: " + event.channel);
             profile = profileRepository.find(event.uiid);
             if (profile === null) {
@@ -125,11 +124,11 @@ module.exports = (function() {
 
             if (event.action === "state-change") {
                 //if the user sends lat/latlong
-                if (event.data.hasOwnerProperty("latlong")) {
+                if (event.data.latlong) {
                     profile.latlong = data.latlong;
                 }
 
-                if (event.data.hasOwnerProperty("status")) {
+                if (event.data.status) {
                     profile.status = data.status;
                 }
             }
@@ -139,8 +138,6 @@ module.exports = (function() {
             }
 
             profileRepository.put(profile);
-
-
       }
 
       res.status(200).end();
