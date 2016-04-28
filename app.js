@@ -22,10 +22,10 @@ module.exports = (function() {
     //TODO::Fancy advanced javascript channel groups code goes here!!
     pubnub.subscribe({
       channel: "awg-global"
-      message: function(message,e,ch){
+      ,message: function(message,e,ch){
           var r = /(\S*)@(\S+)/g
           if(r.match(message.content)){
-            while(null != (value = r.exec(message.content)){
+            while(null != (value = r.exec(message.content))){
                 winston.info(value);
             }
           }
