@@ -12,6 +12,7 @@ module.exports = (function() {
     var userprofiles = require("./user.json");
     var profileRepository = new repository.Repository(userprofiles);
     var app = express();
+    var emitter = new events.EventEmitter();
 
     var pubnub = require("pubnub").init({
         subscribe_key: "sub-c-856ccee2-ca2d-11e5-8a35-0619f8945a4f",
@@ -19,7 +20,12 @@ module.exports = (function() {
         ssl: true
     });
 
-    //TODO::Fancy advanced javascript channel groups code goes here!!
+    var atmention = require("./procs/atmention")(emitter,profileRepository, pubnub);
+    //others email, sms, smoke signals, launch pigeons
+    emitter.on("process-at-mention", atmention);
+
+    //TODO::Fancy implement advanced javascript
+    //            channel groups code here!!
     pubnub.subscribe({
       channel: "AWG-global"
       ,message: function(message,e,ch){
@@ -27,6 +33,7 @@ module.exports = (function() {
           if(r.match(message.content)){
             while(null != (value = r.exec(message.content))){
                 winston.info(value);
+                emitter.emit("process-at-mention",message, value);
             }
           }
       }
