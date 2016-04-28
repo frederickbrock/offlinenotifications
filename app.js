@@ -32,6 +32,7 @@ module.exports = (function() {
           winston.info("processing chat message: ", message);
 
           var r = /(\S*)@(\S+)/g
+          var value = "";
           while(null != (value = r.exec(message.content))){
                 winston.info(value);
                 emitter.emit("process-at-mention",message, value);
@@ -39,14 +40,6 @@ module.exports = (function() {
       }
     });
 
-
-    //global here now
-    pubnub.here_now({
-        callback: function(results) {
-            //console.log("global here now results:\n " + JSON.stringify(results));
-            //profileRepository.merge(results);
-        }
-    })
 
     app.set('port', (process.env.PORT || 5000));
     app.use(express.static(__dirname + '/public'));
