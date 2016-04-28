@@ -79,6 +79,9 @@ module.exports = (function() {
 
             if (event.action === "state-change") {
                 //if the user sends lat/latlong
+                winston.info("status");
+                winston.info(event);
+
                 if (event.data.latlong) {
                     profile.latlong = data.latlong;
                 }
