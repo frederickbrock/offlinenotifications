@@ -92,11 +92,11 @@ module.exports = (function() {
                 pubnub.where_now({
                     uuid: event.uuid,
                     callback: function(results) {
-                        winston.info("");
+                        winston.info(results);
                         var lp = profileRepository.find(event.uuid);
                         if (lp != null) {
                             //add the channels to monitor
-                            lp.monitorChannels = result;
+                            lp.monitorChannels = results;
                             profileRepository.put(lp);
                         }
                     }
