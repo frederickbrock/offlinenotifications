@@ -27,10 +27,7 @@ ProfileRepository.prototype = {
     }
 
     ,put: function(profile) {
-        var profile = this.userprofiles[profile.username];
-        if(profile == null){
-          this.userprofiles[profile.username] = profile;
-        }
+        this.userprofiles[profile.username] = profile;
     }
 };
 
