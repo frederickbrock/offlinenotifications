@@ -8,6 +8,7 @@ var Profile = function(username){
         this.lastname = "";
         this.latlong = "";
         this.status = "";
+        this.offlineChannels = ["awg-global"];
 };
 
 var ProfileRepository = function(userprofiles) {

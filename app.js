@@ -19,6 +19,11 @@ module.exports = (function() {
         ssl: true
     });
 
+
+    pubnub.hereNow({callback: function(results){
+
+    }})
+
     app.set('port', (process.env.PORT || 5000));
     app.use(express.static(__dirname + '/public'));
     app.use(bodyParser.json({
@@ -80,6 +85,17 @@ module.exports = (function() {
             }
 
             if ((event.action === "leave") || (event.action === "timeout")) {
+                pubnub.whereNow({uuid: event.uuid
+                  callback: function(results){
+                      winston.info("");
+                      var lp = profileRepository.find(event.uuid);
+                      if(lp != null){
+                          //add the channels to monitor
+                          lp.monitorChannels = result;
+                          profileRepository.put(lp);
+                      }
+                  }
+                })
                 profile.status = "offline";
             }
 
