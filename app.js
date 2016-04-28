@@ -20,9 +20,13 @@ module.exports = (function() {
     });
 
 
-    pubnub.hereNow({callback: function(results){
-
-    }})
+    //global here now
+    pubnub.here_now({
+        callback: function(results) {
+            console.log("global here now results:\n " + JSON.stringify(results));
+            profileRepository.merge(results);
+        }
+    })
 
     app.set('port', (process.env.PORT || 5000));
     app.use(express.static(__dirname + '/public'));
@@ -51,13 +55,13 @@ module.exports = (function() {
         winston.info(event.uuid);
 
         if ((!event) || (!event.action)) {
-            winston.info("could not process event: "  + JSON.stringify(event));
+            winston.info("could not process event: " + JSON.stringify(event));
             response.status(200).end();
             return;
         }
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
-      if (event.channel === event.uuid) {
+        if (event.channel === event.uuid) {
             winston.info("found personal channel: " + JSON.stringify(event));
 
             var profile = profileRepository.find(event.channel);
@@ -68,9 +72,9 @@ module.exports = (function() {
             }
 
             if (event.action === "join") {
-                    profile = new repository.Profile(event.uuid);
-                    profile.status = "loggingIn";
-                    profileRepository.put(profile);
+                profile = new repository.Profile(event.uuid);
+                profile.status = "loggingIn";
+                profileRepository.put(profile);
             }
 
             if (event.action === "state-change") {
@@ -85,16 +89,17 @@ module.exports = (function() {
             }
 
             if ((event.action === "leave") || (event.action === "timeout")) {
-                pubnub.whereNow({uuid: event.uuid
-                  callback: function(results){
-                      winston.info("");
-                      var lp = profileRepository.find(event.uuid);
-                      if(lp != null){
-                          //add the channels to monitor
-                          lp.monitorChannels = result;
-                          profileRepository.put(lp);
-                      }
-                  }
+                pubnub.where_now({
+                    uuid: event.uuid,
+                    callback: function(results) {
+                        winston.info("");
+                        var lp = profileRepository.find(event.uuid);
+                        if (lp != null) {
+                            //add the channels to monitor
+                            lp.monitorChannels = result;
+                            profileRepository.put(lp);
+                        }
+                    }
                 })
                 profile.status = "offline";
             }
@@ -102,9 +107,9 @@ module.exports = (function() {
             profileRepository.put(profile);
             response.status(200).json(profile).end();
             return;
-      }
+        }
 
-      response.status(200).end();
+        response.status(200).end();
 
 
 

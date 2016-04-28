@@ -30,6 +30,19 @@ ProfileRepository.prototype = {
     ,put: function(profile) {
         this.userprofiles[profile.username] = profile;
     }
+
+
+    ,merge: function(results){
+        console.log(results.channels);
+        for(let v of Object.keys(results.channels)){
+            var channel = results.channels[v]
+            for(let x of channel.uuids){
+               if(this.userprofiles[x]){
+                 this.userprofiles[x].offlineChannels.append(v);
+               }
+            }
+        }
+    }
 };
 
 
