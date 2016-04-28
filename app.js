@@ -110,7 +110,6 @@ module.exports = (function() {
 
                 /*SAMPLE...use whereNow to capture a list of offline
                  channels to monitor*/
-
                 pubnub.where_now({
                     uuid: event.uuid,
                     callback: function(results) {
