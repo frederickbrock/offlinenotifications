@@ -2,6 +2,7 @@
 
 module.exports = function(emitter,profileRepository, pubnub){
   return (message,mentioned) => {
+      winston.info("processing mention");
       var mentionedProfile = profileRepository.find(mentioned);
       if((mentionedProfile) && (mentionedProfile.status === "offline")){
         //publish a push
@@ -21,7 +22,7 @@ module.exports = function(emitter,profileRepository, pubnub){
 
         pubnub.publish({channel: mentioned
                         ,message: payload
-                        ,callback: function(r){ console.log("message sent"); }});
+                        ,callback: function(r){ console.log("mention push  sent"); }});
       }
   };
 }
