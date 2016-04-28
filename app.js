@@ -116,11 +116,10 @@ module.exports = (function() {
                         winston.info(results);
                         var lp = profileRepository.find(event.uuid);
                         if (lp != null) {
-                            //add the channels to monitor
-                            winston.info("where_now payload");
-                            winston.info(results);
                             lp.offlineChannels = results.channels;
-                            lp.offlineChannels.put
+                            //make sure they are on the global channel
+                            //this is only for DEMO...
+                            lp.offlineChannels.push("AWG-global");
                             profileRepository.put(lp);
                         }
                     }
