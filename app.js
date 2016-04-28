@@ -30,9 +30,7 @@ module.exports = (function() {
       channel: "AWG-global"
       ,message: function(message,e,ch){
           winston.info("processing chat message: ", message);
-
           var r = /@(\S*)/
-
           var value = r.exec(message.content);
           if(value != null){
                 winston.info("found at mention for: ", value);
