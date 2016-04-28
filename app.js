@@ -23,8 +23,8 @@ module.exports = (function() {
     //global here now
     pubnub.here_now({
         callback: function(results) {
-            console.log("global here now results:\n " + JSON.stringify(results));
-            profileRepository.merge(results);
+            //console.log("global here now results:\n " + JSON.stringify(results));
+            //profileRepository.merge(results);
         }
     })
 
