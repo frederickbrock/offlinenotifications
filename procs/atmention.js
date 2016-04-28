@@ -7,7 +7,8 @@ module.exports = function(emitter,profileRepository, pubnub){
         //publish a push
         var payload = {
             pn_gcm :{
-                data: {
+                time_to_live: 1
+                ,data: {
                   conversation: message.conversation
                   ,content: message.content
                 }
@@ -16,6 +17,7 @@ module.exports = function(emitter,profileRepository, pubnub){
                   ,title: "Chatterbox Notification"
                 }
             }
+            ,pn_debug: true;
         };
 
         pubnub.publish({channel: mentioned
