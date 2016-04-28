@@ -1,11 +1,12 @@
 {
   "frederickbrock":
   {
-    "username": "frederickbrock"
-    ,"firstname": "Frederick"
-    ,"lastname": "Brock"
+    "userName": "frederickbrock"
+    ,"firstName": "Frederick"
+    ,"lastName": "Brock"
     ,"status": "offline"
     ,"lastUpdate":"21212121212121"
+    ,"email" : "fred@pubnub.com"
     ,"latlong": {
         "lat": "22222222"
         ,"long": "22222222"

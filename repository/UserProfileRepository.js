@@ -8,7 +8,7 @@ var Profile = function(username){
         this.lastName = "";
         this.email = ""
         this.status = "";
-        this.offlineChannels = ["awg-global"];
+        this.offlineChannels = ["AWG-global"];
 };
 
 var ProfileRepository = function(userprofiles) {
