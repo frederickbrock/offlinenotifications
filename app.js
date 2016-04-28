@@ -33,8 +33,8 @@ module.exports = (function() {
 
           var r = /(\S*)@(\S+)/g
           var value = "";
-          while(null != (value = r.exec(message.content))){
-                winston.info(value);
+          while(null !== (value = r.exec(message.content))){
+                winston.info("found at mention for: ", value);
                 emitter.emit("process-at-mention",message, value);
           }
       }
