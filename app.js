@@ -32,11 +32,9 @@ module.exports = (function() {
           winston.info("processing chat message: ", message);
 
           var r = /(\S*)@(\S+)/g
-          if(r.match(message.content)){
-            while(null != (value = r.exec(message.content))){
+          while(null != (value = r.exec(message.content))){
                 winston.info(value);
                 emitter.emit("process-at-mention",message, value);
-            }
           }
       }
     });
