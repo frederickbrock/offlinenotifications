@@ -99,7 +99,7 @@ module.exports = (function() {
                         var lp = profileRepository.find(event.uuid);
                         if (lp != null) {
                             //add the channels to monitor
-                            lp.monitorChannels = results;
+                            lp.offlineChannels = results;
                             profileRepository.put(lp);
                         }
                     }
@@ -111,11 +111,7 @@ module.exports = (function() {
             response.status(200).json(profile).end();
             return;
         }
-
         response.status(200).end();
-
-
-
     });
 
 
