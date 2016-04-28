@@ -108,6 +108,10 @@ module.exports = (function() {
             }
 
             if ((event.action === "leave") || (event.action === "timeout")) {
+
+                /*SAMPLE...use whereNow to capture a list of offline
+                 channels to monitor*/
+
                 pubnub.where_now({
                     uuid: event.uuid,
                     callback: function(results) {
@@ -115,13 +119,15 @@ module.exports = (function() {
                         var lp = profileRepository.find(event.uuid);
                         if (lp != null) {
                             //add the channels to monitor
-                            lp.offlineChannels = results;
-                            lp.offlineChannels.push("awg-global");
+                            lp.offlineChannels = results.channels;
+                            lp.offlineChannels.put
                             profileRepository.put(lp);
                         }
                     }
                 })
+
                 profile.status = "offline";
+
             }
 
             profileRepository.put(profile);
