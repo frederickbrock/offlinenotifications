@@ -31,7 +31,7 @@ module.exports = (function() {
       ,message: function(message,e,ch){
           winston.info("processing chat message: ", message);
 
-          var r = /(\S*)@(\S+)/g
+          var r = /@(\S*)/
           var value = "";
           while(null !== (value = r.exec(message.content))){
                 winston.info("found at mention for: ", value);
