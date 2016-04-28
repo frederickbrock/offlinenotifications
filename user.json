@@ -1,8 +1,21 @@
 {
-  "frederickbrock":
+  "mickeymouse":
   {
-    "userName": "frederickbrock"
+    "userName": "mickeymouse"
     ,"firstName": "Frederick"
+    ,"lastName": "Brock"
+    ,"status": "offline"
+    ,"lastUpdate":"21212121212121"
+    ,"email" : "mickey@gmail.com"
+    ,"latlong": {
+        "lat": "22222222"
+        ,"long": "22222222"
+    }
+  },
+  "fredbrock":
+  {
+    "userName": "fredbrock"
+    ,"firstName": "Fred"
     ,"lastName": "Brock"
     ,"status": "offline"
     ,"lastUpdate":"21212121212121"
