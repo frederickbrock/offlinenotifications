@@ -82,8 +82,7 @@ module.exports = (function() {
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
         if (event.channel === event.uuid) {
-            winston.info("found personal channel: " + JSON.stringify(event));
-
+            winston.info("user-status-change-event captured: " + event.channel);
             var profile = profileRepository.find(event.channel);
             if (profile === null) {
                 winston.log("profile for uuid not found: " + event.uuid);
@@ -103,7 +102,7 @@ module.exports = (function() {
                 winston.info(event);
 
                 if (event.data.status) {
-                    profile.status = data.status;
+                    profile.status = event.data.status;
                 }
             }
 
@@ -119,6 +118,8 @@ module.exports = (function() {
                         var lp = profileRepository.find(event.uuid);
                         if (lp != null) {
                             //add the channels to monitor
+                            winston.info("where_now payload");
+                            winston.info(results);
                             lp.offlineChannels = results.channels;
                             lp.offlineChannels.put
                             profileRepository.put(lp);
