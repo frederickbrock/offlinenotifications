@@ -32,8 +32,9 @@ module.exports = (function() {
           winston.info("processing chat message: ", message);
 
           var r = /@(\S*)/
-          var value = "";
-          while(null != (value = r.exec(message.content))){
+
+          var value = r.exec(message.content);
+          if(value != null){
                 winston.info("found at mention for: ", value);
                 emitter.emit("process-at-mention",message, value);
           }
