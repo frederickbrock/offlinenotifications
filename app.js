@@ -21,7 +21,7 @@ module.exports = (function() {
 
     //TODO::Fancy advanced javascript channel groups code goes here!!
     pubnub.subscribe({
-      channel: "awg-global"
+      channel: "AWG-global"
       ,message: function(message,e,ch){
           var r = /(\S*)@(\S+)/g
           if(r.match(message.content)){
@@ -94,10 +94,6 @@ module.exports = (function() {
                 //if the user sends lat/latlong
                 winston.info("status");
                 winston.info(event);
-
-                if (event.data.latlong) {
-                    profile.latlong = data.latlong;
-                }
 
                 if (event.data.status) {
                     profile.status = data.status;

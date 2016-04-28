@@ -3,10 +3,10 @@ var winston = require("winston");
 
 var Profile = function(username){
 
-        this.username = username;
-        this.firstname = "";
-        this.lastname = "";
-        this.latlong = "";
+        this.userName = username;
+        this.firstName = "";
+        this.lastName = "";
+        this.email = ""
         this.status = "";
         this.offlineChannels = ["awg-global"];
 };
