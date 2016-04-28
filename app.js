@@ -65,6 +65,7 @@ module.exports = (function() {
             if (event.action === "join") {
                     profile = new repository.Profile(event.uuid);
                     profile.status = "loggingIn";
+                    profileRepository.put(profile);
             }
 
             if (event.action === "state-change") {
