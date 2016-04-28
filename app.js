@@ -100,7 +100,7 @@ module.exports = (function() {
                         if (lp != null) {
                             //add the channels to monitor
                             lp.offlineChannels = results;
-                            lp.offlineChannels.append("awg-global");
+                            lp.offlineChannels.push("awg-global");
                             profileRepository.put(lp);
                         }
                     }
