@@ -18,8 +18,6 @@ var ProfileRepository = function(userprofiles) {
 ProfileRepository.prototype = {
 
     find: function(username) {
-        console.log(username  + " is what I am looking for");
-        console.log(this.userprofiles[username]);
         return this.userprofiles[username];
     }
 
@@ -28,7 +26,7 @@ ProfileRepository.prototype = {
     }
 
     ,put: function(profile) {
-        this.userprofiles[profile.username] = profile;
+        this.userprofiles[profile.userName] = profile;
     }
 
 
@@ -38,7 +36,7 @@ ProfileRepository.prototype = {
             var channel = results.channels[v]
             for(let x of channel.uuids){
                if(this.userprofiles[x]){
-                 this.userprofiles[x].offlineChannels.append(v);
+                 this.userprofiles[x].offlineChannels.push(v);
                }
             }
         }

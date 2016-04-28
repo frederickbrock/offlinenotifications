@@ -92,7 +92,9 @@ module.exports = (function() {
 
             if (event.action === "join") {
                 profile = new repository.Profile(event.uuid);
+                winston.info("user-status-change-event: changed status for" + profile.userName +  " from " + profile.status + "to loggingIn" );
                 profile.status = "loggingIn";
+
                 profileRepository.put(profile);
             }
 
