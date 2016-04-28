@@ -7,7 +7,7 @@ var Profile = function(username){
         this.firstName = "";
         this.lastName = "";
         this.email = ""
-        this.status = "";
+        this.status = "offline";
         this.offlineChannels = ["AWG-global"];
 };
 

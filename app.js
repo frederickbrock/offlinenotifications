@@ -61,18 +61,17 @@ module.exports = (function() {
     });
 
     app.post("/chatterbox/api/v1/wh/presence", (request, response) => {
-        winston.info('entering presence webhook');
         var event = request.body;
+        winston.info('entering presence webhook for uuid/user: ' + event.uuid);
 
         pubnub.publish({
             channel: "wh-raw",
             message: event,
             callback: function(result) {
-                winston.info("published status update");
+                winston.info("published status to wh-raw channel{" + result[2] + "}");
             }
         });
 
-        winston.info(event.uuid);
 
         if ((!event) || (!event.action)) {
             winston.info("could not process event: " + JSON.stringify(event));
@@ -94,18 +93,23 @@ module.exports = (function() {
                 profile = new repository.Profile(event.uuid);
                 winston.info("user-status-change-event: changed status for" + profile.userName +  " from " + profile.status + "to loggingIn" );
                 profile.status = "loggingIn";
-
                 profileRepository.put(profile);
             }
 
             if (event.action === "state-change") {
                 //if the user sends lat/latlong
-                winston.info("status");
-                winston.info(event);
+                winston.info("status-change with data");
+                winston.info(event.data);
 
                 if (event.data.status) {
                     profile.status = event.data.status;
                 }
+
+                profile.firstName = event.data.firstName;
+                profile.lastName = event.data.lastName;
+                profile.email = event.data.email;
+                profile.userName = event.data.userName;
+
             }
 
             if ((event.action === "leave") || (event.action === "timeout")) {
