@@ -1,51 +1,39 @@
 "use strict";
-class Profile {
+var winston = require("winston");
 
-    constructor(username) {
+var Profile = function(username){
+
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.latlong = latlong;
-        this.status = status;
-    }
-
+        this.firstname = "";
+        this.lastname = "";
+        this.latlong = "";
+        this.status = "";
 };
 
-class ProfileRepository {
+var ProfileRepository = function(userprofiles) {
+    this.userprofiles = userprofiles;
+}
 
-    constructor() {
-        //this should be your userstore.
-        this.userprofiles = require("./user.json");
+ProfileRepository.prototype = {
+
+    find: function(username) {
+        console.log(username  + " is what I am looking for");
+        console.log(this.userprofiles[username]);
+        return this.userprofiles[username];
     }
 
-    find(username) {
-        var idx = this._findIdx(username);
-        if (idx > -1) {
-            return this.userprofiles[idx];
-        }
-        return null;
-    }
-
-    findAll(){
+    ,findAll: function(){
       return this.userprofiles;
     }
 
-    put(profile) {
+    ,put: function(profile) {
         var profile = this.userprofiles[profile.username];
         if(profile == null){
           this.userprofiles[profile.username] = profile;
         }
     }
+};
 
-    toggleStatus(uuid) {
-        profile = this.find(uuid);
-        if(profile == null){
-          winston.info("the profile being asked");
-        }
-        profile.status = (profile.status === "online") ? "offline" : "online";
-        this.put(profile);
-    }
-}
 
-exports.Repository =  profileRepository;
-exports.UserProfile = UserProfile;
+exports.Repository =  ProfileRepository;
+exports.Profile = Profile;

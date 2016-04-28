@@ -27,7 +27,7 @@ module.exports = function(grunt) {
 					quiet: false, // Optionally suppress output to standard out (defaults to false)
 					clearRequireCache: false // Optionally clear the require cache before running tests (defaults to false)
 				},
-				src: ['test/**/*.js']
+				src: ['specs/**/*.js']
 
 			}
 		},
@@ -35,8 +35,8 @@ module.exports = function(grunt) {
 			localtest: {
 				options: {
 					port: 5000
-					,args: ['../config.json']
-					,script: './src/index.js'
+					,args: ['development']
+					,script: './app.js'
 					,delay: 3
 					,debug: true
 				}
@@ -49,5 +49,5 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-mocha-test');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-express-server');
-	grunt.registerTask("default", ['jshint','mochaTest']);
+	grunt.registerTask("default", ['jshint','express','mochaTest']);
 };

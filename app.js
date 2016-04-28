@@ -9,11 +9,10 @@ var express = require('express'),
 module.exports = (function() {
 
     var repository = require("./repository/UserProfileRepository");
-    var profileRepository = new repository.Repository();
-
-
+    var userprofiles = require("./user.json");
+    var profileRepository = new repository.Repository(userprofiles);
     var app = express();
-    
+
     var pubnub = require("pubnub").init({
         subscribe_key: "sub-c-856ccee2-ca2d-11e5-8a35-0619f8945a4f",
         publish_key: "pub-c-ab9467c4-ec29-4a0b-81bc-c52bb310da8d",
@@ -27,7 +26,7 @@ module.exports = (function() {
     }));
 
 
-    app.get("/chatterbox/api/v1/presence", (request, response) => {
+    app.get("/chatterbox/api/v1/wh/presence", (request, response) => {
         var userProfiles = profileRepository.findAll();
         response.status(200).json(userProfiles).end();
     });
@@ -44,6 +43,8 @@ module.exports = (function() {
             }
         });
 
+        winston.info(event.uuid);
+
         if ((!event) || (!event.action)) {
             winston.info("could not process event: "  + JSON.stringify(event));
             response.status(200).end();
@@ -52,8 +53,9 @@ module.exports = (function() {
         //use a channel with the same name as the uuid to determine
         //if you need to update the status of the profile.
       if (event.channel === event.uuid) {
-            winston.info("found personal channel: " + event.channel);
-            profile = profileRepository.find(event.uiid);
+            winston.info("found personal channel: " + JSON.stringify(event));
+
+            var profile = profileRepository.find(event.channel);
             if (profile === null) {
                 winston.log("profile for uuid not found: " + event.uuid);
                 response.status(200).end();
@@ -61,10 +63,8 @@ module.exports = (function() {
             }
 
             if (event.action === "join") {
-                if (profile === null) {
-                    profile = new UserProfile(event.uuid);
-                    profile.status = "loggingOn";
-                }
+                    profile = new repository.Profile(event.uuid);
+                    profile.status = "loggingIn";
             }
 
             if (event.action === "state-change") {
@@ -83,9 +83,13 @@ module.exports = (function() {
             }
 
             profileRepository.put(profile);
+            response.status(200).json(profile).end();
+            return;
       }
 
-      res.status(200).end();
+      response.status(200).end();
+
+
 
     });
 
